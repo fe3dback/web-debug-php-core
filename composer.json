@@ -1,0 +1,28 @@
+{
+    "name": "web-debug/core",
+    "description": "Implementation of HTTP Web debug protocol (core library)",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "fe3dback",
+            "email": "fe3dback@yandex.ru"
+        }
+    ],
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "WebDebug\\": "src/"
+        }
+    },
+    "require": {
+        "php": "^7.1",
+        "psr/simple-cache": "^1.0",
+        "ramsey/uuid": "^3.8"
+    },
+    "require-dev": {
+        "symfony/var-dumper": "*",
+        "phpunit/phpunit": "^7",
+        "str/str": "^1.1"
+    }
+}
