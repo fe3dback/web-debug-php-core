@@ -4,21 +4,14 @@ declare(strict_types=1);
 
 namespace WebDebug\Builders\Types;
 
-use WebDebug\Builders\Types\Interfaces\IType;
-
 /**
- * Class TsMili
- * @package WebDebug\Builders\Types
+ * @property string $htmlString
  */
-final class HtmlType implements IType
+final class Html extends AbstractType
 {
     /**
-     * @var string
-     */
-    private $htmlString;
-
-    /**
      * HtmlType constructor.
+     *
      * @param string $htmlString
      */
     public function __construct(string $htmlString)
@@ -27,9 +20,9 @@ final class HtmlType implements IType
     }
 
     /**
-     * `Hello <b>world</b>`
+     * `Hello <b>world</b>`.
      *
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function export(int $schemeVersion)
     {

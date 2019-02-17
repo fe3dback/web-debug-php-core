@@ -8,10 +8,8 @@ use PHPUnit\Framework\TestCase;
 use Str\Str;
 use WebDebug\Internal\VoidCache;
 
-
 /**
- * Class ProfilerTest
- * @package WebDebug
+ * Class ProfilerTest.
  */
 class ProfilerTest extends TestCase
 {

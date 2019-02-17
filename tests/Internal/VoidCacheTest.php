@@ -6,10 +6,8 @@ namespace WebDebug\Internal;
 
 use PHPUnit\Framework\TestCase;
 
-
 /**
- * Class VoidCacheTest
- * @package WebDebug\Internal
+ * Class VoidCacheTest.
  */
 class VoidCacheTest extends TestCase
 {

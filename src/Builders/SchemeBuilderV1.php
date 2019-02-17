@@ -4,43 +4,68 @@ declare(strict_types=1);
 
 namespace WebDebug\Builders;
 
-use WebDebug\Builders\Interfaces\ISchemeBuilder;
-
 /**
- * Class SchemeBuilderV1
- * @package WebDebug\Builders
+ * @property \WebDebug\Builders\Models\Route $route matched route controller
  */
-class SchemeBuilderV1 implements ISchemeBuilder
+class SchemeBuilderV1 extends AbstractSchemeBuilder
 {
-    public const PROP_ID = 'id';
-    public const PROP_VERSION = 'version';
-    public const PROP_REQUEST_AT = 'request_at';
-    public const PROP_REQUEST_METHOD = 'request_method';
-    public const PROP_REQUEST_URI = 'request_uri';
-    public const PROP_REQUEST_HEADERS = 'request_headers';
-    public const PROP_REQUEST_QUERY = 'request_query';
-    public const PROP_REQUEST_BODY = 'request_body';
-    public const PROP_REQUEST_COOKIES = 'request_cookies';
-    public const PROP_SESSION_PARAMS = 'session_params';
-    public const PROP_ROUTE = 'route';
-    public const PROP_MIDDLEWARE = 'middleware';
-    public const PROP_MEMORY_PEAK = 'memory_peak';
-    public const PROP_USER = 'user';
-    public const PROP_ACL = 'acl';
-    public const PROP_DB_QUERIES = 'db_queries';
-    public const PROP_CACHE_QUERIES = 'cache_queries';
-    public const PROP_LOGS = 'logs';
-    public const PROP_EMAILS = 'emails';
-    public const PROP_TEMPLATES = 'templates';
-    public const PROP_EVENTS = 'events';
-    public const PROP_RESPONSE_AT = 'response_at';
-    public const PROP_RESPONSE_CODE = 'response_code';
+    private const PROP_REQUEST_AT = 'request_at';
+    private const PROP_REQUEST_METHOD = 'request_method';
+    private const PROP_REQUEST_URI = 'request_uri';
+    private const PROP_REQUEST_HEADERS = 'request_headers';
+    private const PROP_REQUEST_QUERY = 'request_query';
+    private const PROP_REQUEST_BODY = 'request_body';
+    private const PROP_REQUEST_COOKIES = 'request_cookies';
+    private const PROP_SESSION_PARAMS = 'session_params';
+    private const PROP_ROUTE = 'route';
+    private const PROP_MIDDLEWARE = 'middleware';
+    private const PROP_MEMORY_PEAK = 'memory_peak';
+    private const PROP_USER = 'user';
+    private const PROP_ACL = 'acl';
+    private const PROP_DB_QUERIES = 'db_queries';
+    private const PROP_CACHE_QUERIES = 'cache_queries';
+    private const PROP_LOGS = 'logs';
+    private const PROP_EMAILS = 'emails';
+    private const PROP_TEMPLATES = 'templates';
+    private const PROP_EVENTS = 'events';
+    private const PROP_RESPONSE_AT = 'response_at';
+    private const PROP_RESPONSE_CODE = 'response_code';
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getVersion(): int
     {
         return 1;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getSchemeModels(): array
+    {
+        return array_merge(parent::getSchemeModels(), [
+            self::PROP_REQUEST_AT => null,
+            self::PROP_REQUEST_METHOD => null,
+            self::PROP_REQUEST_URI => null,
+            self::PROP_REQUEST_HEADERS => null,
+            self::PROP_REQUEST_QUERY => null,
+            self::PROP_REQUEST_BODY => null,
+            self::PROP_REQUEST_COOKIES => null,
+            self::PROP_SESSION_PARAMS => null,
+            self::PROP_ROUTE => $this->route,
+            self::PROP_MIDDLEWARE => null,
+            self::PROP_MEMORY_PEAK => null,
+            self::PROP_USER => null,
+            self::PROP_ACL => null,
+            self::PROP_DB_QUERIES => null,
+            self::PROP_CACHE_QUERIES => null,
+            self::PROP_LOGS => null,
+            self::PROP_EMAILS => null,
+            self::PROP_TEMPLATES => null,
+            self::PROP_EVENTS => null,
+            self::PROP_RESPONSE_AT => null,
+            self::PROP_RESPONSE_CODE => null,
+        ]);
     }
 }

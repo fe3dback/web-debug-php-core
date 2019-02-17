@@ -1,4 +1,11 @@
-vendor/*
+# dev
 .idea/*
-composer.lock
 run.php
+tmp/*
+
+# code quality
+.php_cs.cache
+
+# vendor
+composer.lock
+vendor/*

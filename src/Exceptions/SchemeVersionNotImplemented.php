@@ -8,14 +8,14 @@ use RuntimeException;
 use Throwable;
 
 /**
- * Class SchemeVersionNotImplementedYet
- * @package WebDebug\Exceptions
+ * Class SchemeVersionNotImplementedYet.
  */
 class SchemeVersionNotImplemented extends RuntimeException
 {
     /**
      * Construct the exception.
-     * @param int $targetVersion
+     *
+     * @param int            $targetVersion
      * @param Throwable|null $previous
      */
     public function __construct(int $targetVersion, Throwable $previous = null)
