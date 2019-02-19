@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace WebDebug\Builders;
 
 /**
+ * @property \WebDebug\Builders\Models\RequestAt $requestAt request received at
+ * @property \WebDebug\Builders\Models\RequestMethod $requestMethod request HTTP method
  * @property \WebDebug\Builders\Models\Route $route matched route controller
  */
 class SchemeBuilderV1 extends AbstractSchemeBuilder
@@ -45,8 +47,8 @@ class SchemeBuilderV1 extends AbstractSchemeBuilder
     protected function getSchemeModels(): array
     {
         return array_merge(parent::getSchemeModels(), [
-            self::PROP_REQUEST_AT => null,
-            self::PROP_REQUEST_METHOD => null,
+            self::PROP_REQUEST_AT => $this->requestAt,
+            self::PROP_REQUEST_METHOD => $this->requestMethod,
             self::PROP_REQUEST_URI => null,
             self::PROP_REQUEST_HEADERS => null,
             self::PROP_REQUEST_QUERY => null,

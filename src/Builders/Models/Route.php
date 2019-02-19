@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace WebDebug\Builders\Models;
 
-use Serafim\Properties\Properties;
-
 /**
  * @property string                            $urlTemplate    Url template with placeholders
  * @property string                            $name           Unique route name (id)
@@ -18,8 +16,6 @@ use Serafim\Properties\Properties;
  */
 class Route extends AbstractModel
 {
-    use Properties;
-
     /**
      * RouteModel constructor.
      *
