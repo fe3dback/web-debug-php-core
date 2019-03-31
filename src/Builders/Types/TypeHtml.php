@@ -5,14 +5,16 @@ declare(strict_types=1);
 namespace WebDebug\Builders\Types;
 
 /**
- * @property string $htmlString
+ * @property string $htmlString Valid html
+ *
+ * @see https://web-debug.dev/docs/scheme/types.html#html
  */
-final class Html extends AbstractType
+final class TypeHtml extends AbstractType
 {
     /**
      * HtmlType constructor.
      *
-     * @param string $htmlString
+     * @param string $htmlString Valid html
      */
     public function __construct(string $htmlString)
     {

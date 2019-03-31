@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace WebDebug\Builders\Types;
 
 /**
- * @property float $time
+ * @property float $time unixtime (GMT) with milliseconds
+ *
+ * @see https://web-debug.dev/docs/scheme/types.html#tsms
  */
-final class TsMili extends AbstractType
+final class TypeTsMs extends AbstractType
 {
     /**
      * TsMili constructor.

@@ -7,9 +7,11 @@ namespace WebDebug\Builders\Types;
 use Str\Str;
 
 /**
- * @property string $relPath
+ * @property string $relativePath
+ *
+ * @see https://web-debug.dev/docs/scheme/types.html#relativepath
  */
-final class RelPath extends AbstractType
+final class TypeRelativePath extends AbstractType
 {
     /**
      * @param string $relPath
@@ -21,7 +23,7 @@ final class RelPath extends AbstractType
      */
     public function __construct(string $relPath)
     {
-        $this->relPath = Str::make($relPath)
+        $this->relativePath = Str::make($relPath)
             ->ensureLeft('/')
             ->replace('\\', '/')
             ->getString()
@@ -35,6 +37,6 @@ final class RelPath extends AbstractType
      */
     public function export(int $schemeVersion)
     {
-        return $this->relPath;
+        return $this->relativePath;
     }
 }

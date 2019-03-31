@@ -20,7 +20,8 @@
         "psr/simple-cache": "^1.0",
         "ramsey/uuid": "^3.8",
         "str/str": "^1.1",
-        "serafim/properties": "^2.0"
+        "serafim/properties": "^2.0",
+        "ramsey/collection": "^1.0"
     },
     "require-dev": {
         "symfony/var-dumper": "*",

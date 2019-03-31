@@ -7,12 +7,16 @@ declare(strict_types=1);
 namespace WebDebug\Builders\Types;
 
 use InvalidArgumentException;
+use Ramsey\Uuid\Uuid;
 use Str\Str;
 
 /**
  * @property string $uuid
+ *
+ * @see https://web-debug.dev/docs/scheme/types.html#uuid
+ * @see https://tools.ietf.org/html/rfc4122
  */
-final class UUID extends AbstractType
+final class TypeUUID extends AbstractType
 {
     /**
      * @param string|null $uuid
@@ -21,7 +25,7 @@ final class UUID extends AbstractType
     {
         if (null === $uuid) {
             /* @noinspection PhpUnhandledExceptionInspection */
-            $this->uuid = \Ramsey\Uuid\Uuid::uuid4()->toString();
+            $this->uuid = Uuid::uuid4()->toString();
 
             return;
         }

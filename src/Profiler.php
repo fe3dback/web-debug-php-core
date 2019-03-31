@@ -11,8 +11,6 @@ use Psr\SimpleCache\CacheInterface;
 use Ramsey\Uuid\Uuid;
 use RuntimeException;
 use Str\Str;
-use WebDebug\Builders\Interfaces\ISchemeBuilder;
-use WebDebug\Builders\SchemeBuilderV1;
 
 /**
  * Class Profiler.
@@ -30,11 +28,6 @@ final class Profiler
      * @var CacheInterface
      */
     private $storage;
-
-    /**
-     * @var ISchemeBuilder
-     */
-    private $builder;
 
     /**
      * @var int
@@ -67,17 +60,6 @@ final class Profiler
     }
 
     /**
-     * @return SchemeBuilderV1
-     */
-    public function getBuilderV1(): SchemeBuilderV1
-    {
-        /** @var SchemeBuilderV1 $b */
-        $b = $this->makeBuilder(SchemeBuilderV1::class, 1);
-
-        return $b;
-    }
-
-    /**
      * @return string
      */
     public function getId(): string
@@ -98,7 +80,7 @@ final class Profiler
         try {
             $this->storage->set(
                 $this->getStorageKey($this->getId()),
-                $this->builder->build()
+                [] // @todo build scheme
             );
         } catch (CacheException $e) {
             throw new RuntimeException(
@@ -154,28 +136,5 @@ final class Profiler
         return Str::make(self::STORAGE_KEY)
             ->replace('%uuid%', $uuid)
             ->getString();
-    }
-
-    /**
-     * @param string $className
-     * @param int    $versionConstraint
-     *
-     * @return ISchemeBuilder
-     */
-    private function makeBuilder(string $className, int $versionConstraint): ISchemeBuilder
-    {
-        if (null === $this->builder) {
-            $this->builder = new $className($this->uuid);
-            $this->builderVersion = $this->builder->getVersion();
-        }
-
-        if ($this->builder->getVersion() !== $versionConstraint) {
-            throw new RuntimeException(
-                'Another version scheme builder is already exist. 
-                Please use builder with same version everywhere.'
-            );
-        }
-
-        return $this->builder;
     }
 }

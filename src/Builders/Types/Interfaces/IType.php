@@ -4,19 +4,11 @@ declare(strict_types=1);
 
 namespace WebDebug\Builders\Types\Interfaces;
 
+use WebDebug\Builders\Interfaces\IExportable;
+
 /**
  * Interface IType.
  */
-interface IType
+interface IType extends IExportable
 {
-    /**
-     * Export value to scheme model field.
-     *
-     * @param int $schemeVersion
-     *
-     * @return string|int|array
-     *
-     * @internal
-     */
-    public function export(int $schemeVersion);
 }

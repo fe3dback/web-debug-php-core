@@ -7,9 +7,11 @@ namespace WebDebug\Builders\Types;
 use Str\Str;
 
 /**
- * @property string $method
+ * @property string $method HTTP Method (uppercase)
+ *
+ * @see https://web-debug.dev/docs/scheme/types.html#method
  */
-final class Method extends AbstractType
+final class TypeMethod extends AbstractType
 {
     /**
      * @param string $method HTTP Method (uppercase)

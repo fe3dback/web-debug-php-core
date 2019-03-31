@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace WebDebug\Builders\Types;
 
-use Serafim\Properties\Properties;
+use WebDebug\Builders\AbstractObject;
 use WebDebug\Builders\Types\Interfaces\IType;
 
 /**
- * Class AbstractType
- * @package WebDebug\Builders\Types
+ * Class AbstractType.
+ *
+ * @see https://web-debug.dev/docs/scheme/types.html
  */
-abstract class AbstractType implements IType
+abstract class AbstractType extends AbstractObject implements IType
 {
-    use Properties;
 }
