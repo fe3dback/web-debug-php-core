@@ -25,6 +25,14 @@ final class TypeImportance extends AbstractType
      */
     public function __construct(int $importance)
     {
+        if ($importance < 1) {
+            $importance = 1;
+        }
+
+        if ($importance > 8) {
+            $importance = 8;
+        }
+
         $this->importance = $importance;
     }
 

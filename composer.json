@@ -15,6 +15,11 @@
             "WebDebug\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
     "require": {
         "php": "^7.1",
         "ext-json": "*",
