@@ -8,21 +8,29 @@ namespace WebDebug;
 
 use Psr\SimpleCache\CacheException;
 use Psr\SimpleCache\CacheInterface;
-use Ramsey\Uuid\Uuid;
 use RuntimeException;
 use Str\Str;
+use WebDebug\Builders\EventCollection;
+use WebDebug\Builders\Events\Interfaces\IEvent;
+use WebDebug\Builders\Scheme;
+use WebDebug\Builders\Types\TypeUUID;
 
 /**
  * Class Profiler.
+ *
+ * @property TypeUUID $uuid
+ * @property bool     $isProductionMode
+ * @property int      $version
  */
 final class Profiler
 {
+    public const VERSION_1 = 1;
     private const STORAGE_KEY = '_wdpr__%uuid%';
 
     /**
-     * @var string
+     * @var Scheme
      */
-    private $uuid;
+    private $scheme;
 
     /**
      * @var CacheInterface
@@ -30,31 +38,40 @@ final class Profiler
     private $storage;
 
     /**
-     * @var bool
-     */
-    private $isProductionMode;
-
-    /**
      * Profiler constructor.
      *
+     * @param int            $version
      * @param CacheInterface $storage
      * @param bool           $isProductionMode
-     *
-     * @throws \Exception
      */
-    public function __construct(CacheInterface $storage, bool $isProductionMode)
+    public function __construct(int $version, CacheInterface $storage, bool $isProductionMode)
     {
-        $this->uuid = Uuid::uuid4()->toString();
-        $this->storage = $storage;
+        $this->uuid = new TypeUUID();
         $this->isProductionMode = $isProductionMode;
+        $this->version = $version;
+
+        $this->storage = $storage;
+        $this->scheme = new Scheme($this->uuid);
     }
 
     /**
-     * @return string
+     * @param IEvent $event
+     *
+     * @return Profiler
      */
-    public function getId(): string
+    public function addEvent(IEvent $event): self
     {
-        return $this->uuid;
+        $this->scheme->events->add($event);
+
+        return $this;
+    }
+
+    /**
+     * @return EventCollection
+     */
+    public function getEventCollection(): EventCollection
+    {
+        return $this->scheme->events;
     }
 
     /**
@@ -64,27 +81,27 @@ final class Profiler
      * This function does nothing in production
      *
      * @return string
-     *
-     * @throws \Throwable
      */
-    public function store(): string
+    public function push(): string
     {
-        if (!$this->isProductionMode) {
-            try {
-                $this->storage->set(
-                    $this->getStorageKey($this->getId()),
-                    [] // @todo $this->builder->build()
-                );
-            } catch (CacheException $e) {
-                throw new RuntimeException(
-                    $e->getMessage(),
-                    $e->getCode(),
-                    $e
-                );
-            }
+        if ($this->isProductionMode) {
+            return $this->uuid->uuid;
         }
 
-        return $this->getId();
+        try {
+            $this->storage->set(
+                $this->getStorageKey($this->uuid->uuid),
+                json_encode($this->scheme->export($this->version))
+            );
+        } catch (CacheException $e) {
+            throw new RuntimeException(
+                $e->getMessage(),
+                $e->getCode(),
+                $e
+            );
+        }
+
+        return $this->uuid->uuid;
     }
 
     /**
@@ -96,19 +113,17 @@ final class Profiler
      * @param string $uuid
      *
      * @return string|null
-     *
-     * @throws \Throwable
      */
-    public function fetch(string $uuid): ?string
+    public function pop(string $uuid): ?string
     {
         if ($this->isProductionMode) {
             return null;
         }
 
         try {
-            $jsonString = $this->storage->get(
-                $this->getStorageKey($uuid)
-            );
+            $k = $this->getStorageKey($uuid);
+            $jsonString = (string) $this->storage->get($k);
+            $this->storage->delete($k);
         } catch (CacheException $e) {
             throw new RuntimeException(
                 $e->getMessage(),
@@ -117,11 +132,11 @@ final class Profiler
             );
         }
 
-        if (Str::make((string) $jsonString)->isJson()) {
-            return $jsonString;
+        if ('' === $jsonString) {
+            return null;
         }
 
-        return null;
+        return $jsonString;
     }
 
     /**
@@ -135,6 +150,7 @@ final class Profiler
     {
         return Str::make(self::STORAGE_KEY)
             ->replace('%uuid%', $uuid)
-            ->getString();
+            ->getString()
+        ;
     }
 }

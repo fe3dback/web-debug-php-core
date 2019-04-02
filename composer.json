@@ -3,13 +3,20 @@
     "description": "Implementation of HTTP Web debug protocol (core library)",
     "type": "library",
     "license": "MIT",
+    "keywords": ["debug", "web-debug", "scheme", "psr-6"],
     "authors": [
         {
             "name": "fe3dback",
             "email": "fe3dback@yandex.ru"
         }
     ],
+    "homepage": "https://web-debug.dev",
+    "support": {
+        "issues": "https://github.com/fe3dback/web-debug-php-core/issues",
+        "source": "https://github.com/fe3dback/web-debug-php-core"
+    },
     "minimum-stability": "stable",
+    "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "WebDebug\\": "src/"
@@ -23,17 +30,19 @@
     "require": {
         "php": "^7.1",
         "ext-json": "*",
-        "psr/simple-cache": "^1.0",
-        "ramsey/uuid": "^3.8",
+        "psr/simple-cache": "~1.0",
         "str/str": "^1.1",
         "serafim/properties": "^2.0",
+        "ramsey/uuid": "^3.8",
         "ramsey/collection": "^1.0"
     },
     "require-dev": {
-        "symfony/var-dumper": "^4.2",
         "phpunit/phpunit": "^7",
         "phpstan/phpstan": "^0.11.2",
         "friendsofphp/php-cs-fixer": "^2.14",
-        "kodus/file-cache": "^1.1"
+        "symfony/cache": "*"
+    },
+    "suggest": {
+        "symfony/cache": "Use any psr-6/16 compatible cache for persisted storage"
     }
 }

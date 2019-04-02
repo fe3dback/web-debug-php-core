@@ -24,10 +24,6 @@ abstract class AbstractObject implements IExportable
     protected static function build(int $schemeVersion, array $list): array
     {
         return array_map(static function ($prop) use ($schemeVersion) {
-            if (null === $prop) {
-                return null;
-            }
-
             if ($prop instanceof CollectionInterface) {
                 return self::build($schemeVersion, $prop->toArray());
             }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WebDebug\Builders\Events;
+namespace WebDebug\Builders;
 
 use Ramsey\Collection\AbstractCollection;
 use WebDebug\Builders\Events\Interfaces\IEvent;

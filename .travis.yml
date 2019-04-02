@@ -1,0 +1,18 @@
+language: php
+php:
+  - 7.1
+  - 7.2
+  - 7.3
+  - nightly
+
+sudo: false
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+install:
+  - composer install --no-interaction --dev
+
+script:
+  - php ./vendor/bin/phpunit

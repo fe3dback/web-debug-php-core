@@ -1,0 +1,22 @@
+# common
+* text=auto
+
+# git
+.editorconfig export-ignore
+.gitattributes export-ignore
+.gitignore export-ignore
+
+# ci
+.travis.yml export-ignore
+
+# unit/stan
+tests export-ignore
+build export-ignore
+phpstan.neon export-ignore
+phpunit.xml export-ignore
+phpunit.xml.dist export-ignore
+
+# dev
+.php_cs.dist export-ignore
+.php_cs.cache export-ignore
+.php_cs export-ignore

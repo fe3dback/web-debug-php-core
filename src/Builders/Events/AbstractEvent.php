@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace WebDebug\Builders\Events;
 
 use WebDebug\Builders\AbstractObject;
+use WebDebug\Builders\EventCollection;
 use WebDebug\Builders\Events\Interfaces\IEvent;
 use WebDebug\Builders\Types\TypeDurationMs;
 use WebDebug\Builders\Types\TypeImportance;
