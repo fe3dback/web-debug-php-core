@@ -1,5 +1,7 @@
 # Web-Debug PHP Library
 
+[![Build Status](https://travis-ci.org/fe3dback/web-debug-php-core.svg?branch=master)](https://travis-ci.org/fe3dback/web-debug-php-core)
+
 This is official PHP core-library with server-side implementation
 of https://web-debug.dev/
 
@@ -45,8 +47,8 @@ $log->tags->add(new TypeTagMultipart('component', 'kernel'));
 
 // add events to scheme
 $profiler->addEvent($log);
-$profiler->addEvent($log = new EventLog('Another message'));
-$profiler->addEvent($log = new EventLog('And another'));
+$profiler->addEvent(new EventLog('Another message'));
+$profiler->addEvent(new EventLog('And another'));
 
 // save generated json to storage
 $uuid = $profiler->push(); // bdb01adb-895b-4a8b-b1b3-bbd5aca237fe
