@@ -7,21 +7,26 @@ namespace WebDebug\Builders\Types;
 use Str\Str;
 
 /**
- * @property string $method HTTP Method (uppercase)
- *
  * @see https://web-debug.dev/docs/scheme/types.html#method
  */
 final class TypeMethod extends AbstractType
 {
     /**
+     * HTTP Method (uppercase).
+     *
+     * @var string
+     */
+    private $value;
+
+    /**
      * @param string $method HTTP Method (uppercase)
      */
     public function __construct(string $method)
     {
-        $this->method = Str::make($method)
+        $this->setValue(Str::make($method)
             ->toUpperCase()
             ->getString()
-        ;
+        );
     }
 
     /**
@@ -31,6 +36,22 @@ final class TypeMethod extends AbstractType
      */
     public function export(int $schemeVersion)
     {
-        return $this->method;
+        return $this->getValue();
+    }
+
+    /**
+     * @return string
+     */
+    public function getValue(): string
+    {
+        return $this->value;
+    }
+
+    /**
+     * @param string $value
+     */
+    public function setValue(string $value): void
+    {
+        $this->value = $value;
     }
 }

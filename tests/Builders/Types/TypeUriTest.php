@@ -20,10 +20,13 @@ class TypeUriTest extends TestCase
         $this->check('/hello?q=world');
     }
 
+    /**
+     * @param string $u
+     */
     private function check(string $u)
     {
         $uri = new TypeUri($u);
-        $this->assertSame($uri->uri, $u);
+        $this->assertSame($uri->getValue(), $u);
         $this->assertSame($uri->export(1), $u);
     }
 }

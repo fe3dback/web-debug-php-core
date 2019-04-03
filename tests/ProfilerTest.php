@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests;
 
 use PHPUnit\Framework\TestCase;
@@ -28,14 +30,14 @@ class ProfilerTest extends TestCase
         $profiler = self::makeProfiler();
         $uuid = $profiler->push();
         $this->assertIsString($uuid);
-        $this->assertSame($profiler->uuid->uuid, $uuid);
+        $this->assertSame($profiler->uuid->getValue(), $uuid);
     }
 
     public function testPushAndPop()
     {
         $profiler = self::makeProfiler();
         $log = new EventLog('Hello world');
-        $log->message = 'NewMessage';
+        $log->setMessage('NewMessage');
 
         $profiler->addEvent($log);
 
@@ -66,16 +68,17 @@ class ProfilerTest extends TestCase
 
         // -- check inside
 
+        /** @var EventLog $logB */
         $logB = $collection->first();
         $this->assertSame($log, $logB);
-        $this->assertSame('Hello world', $logB->message);
+        $this->assertSame('Hello world', $logB->getMessage());
     }
 
     public function testGetEventCollection()
     {
         $profiler = self::makeProfiler();
 
-        $this->assertIsString($profiler->uuid->uuid);
+        $this->assertIsString($profiler->uuid->getValue());
         $this->assertInstanceOf(EventCollection::class, $profiler->getEventCollection());
         $this->assertCount(0, $profiler->getEventCollection()->toArray());
     }

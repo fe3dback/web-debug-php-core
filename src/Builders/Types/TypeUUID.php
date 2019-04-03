@@ -11,13 +11,16 @@ use Ramsey\Uuid\Uuid;
 use Str\Str;
 
 /**
- * @property string $uuid
- *
  * @see https://web-debug.dev/docs/scheme/types.html#uuid
  * @see https://tools.ietf.org/html/rfc4122
  */
 final class TypeUUID extends AbstractType
 {
+    /**
+     * @var string
+     */
+    private $value;
+
     /**
      * @param string|null $uuid
      */
@@ -25,7 +28,7 @@ final class TypeUUID extends AbstractType
     {
         if (null === $uuid) {
             /* @noinspection PhpUnhandledExceptionInspection */
-            $this->uuid = Uuid::uuid4()->toString();
+            $this->setValue(Uuid::uuid4()->toString());
 
             return;
         }
@@ -34,7 +37,7 @@ final class TypeUUID extends AbstractType
             throw new InvalidArgumentException('Param uuid should be valid UUIDv4');
         }
 
-        $this->uuid = $uuid;
+        $this->setValue($uuid);
     }
 
     /**
@@ -42,6 +45,22 @@ final class TypeUUID extends AbstractType
      */
     public function export(int $schemeVersion)
     {
-        return $this->uuid;
+        return $this->getValue();
+    }
+
+    /**
+     * @return string
+     */
+    public function getValue(): string
+    {
+        return $this->value;
+    }
+
+    /**
+     * @param string $value
+     */
+    public function setValue(string $value): void
+    {
+        $this->value = $value;
     }
 }

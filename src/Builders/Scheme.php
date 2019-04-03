@@ -8,12 +8,23 @@ use WebDebug\Builders\Types\TypeUUID;
 
 /**
  * Class Scheme.
- *
- * @property TypeUUID        $id     unique request id (uuid)
- * @property EventCollection $events debug/profile information about request
  */
 class Scheme extends AbstractObject
 {
+    /**
+     * unique request id (uuid).
+     *
+     * @var TypeUUID
+     */
+    private $uuid;
+
+    /**
+     * debug/profile information about request.
+     *
+     * @var EventCollection
+     */
+    private $eventCollection;
+
     /**
      * Scheme constructor.
      *
@@ -21,8 +32,8 @@ class Scheme extends AbstractObject
      */
     public function __construct(TypeUUID $id)
     {
-        $this->id = $id;
-        $this->events = new EventCollection();
+        $this->uuid = $id;
+        $this->eventCollection = new EventCollection();
     }
 
     /**
@@ -37,9 +48,25 @@ class Scheme extends AbstractObject
     public function export(int $schemeVersion): array
     {
         return self::build($schemeVersion, [
-            'id' => $this->id,
+            'id' => $this->getUuid(),
             'version' => $schemeVersion,
-            'events' => $this->events,
+            'events' => $this->getEventCollection(),
         ]);
+    }
+
+    /**
+     * @return TypeUUID
+     */
+    public function getUuid(): TypeUUID
+    {
+        return $this->uuid;
+    }
+
+    /**
+     * @return EventCollection
+     */
+    public function getEventCollection(): EventCollection
+    {
+        return $this->eventCollection;
     }
 }

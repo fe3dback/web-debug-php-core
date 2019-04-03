@@ -13,7 +13,7 @@ use WebDebug\Builders\Types\TypeUUID;
  */
 class TypeUUIDTest extends TestCase
 {
-    public function testExport()
+    public function testExport(): void
     {
         $cUuid = Uuid::uuid4()->toString();
         $guid = new TypeUUID($cUuid);
@@ -29,19 +29,19 @@ class TypeUUIDTest extends TestCase
         // auto gen and diff
         $guid1 = new TypeUUID();
         $guid2 = new TypeUUID();
-        $this->assertIsString($guid1->uuid);
-        $this->assertIsString($guid2->uuid);
-        $this->assertNotSame($guid1->uuid, $guid2->uuid);
+        $this->assertIsString($guid1->getValue());
+        $this->assertIsString($guid2->getValue());
+        $this->assertNotSame($guid1->getValue(), $guid2->getValue());
 
         // custom
         $cUuid = Uuid::uuid4()->toString();
         $guid3 = new TypeUUID($cUuid);
 
-        $this->assertSame($cUuid, $guid3->uuid);
+        $this->assertSame($cUuid, $guid3->getValue());
 
         // check null
         $guid = new TypeUUID(null);
-        $this->assertIsString($guid->uuid);
+        $this->assertIsString($guid->getValue());
     }
 
     /**

@@ -5,18 +5,21 @@ declare(strict_types=1);
 namespace WebDebug\Builders\Types;
 
 /**
- * @property int $bytes size in bytes
- *
  * @see https://web-debug.dev/docs/scheme/types.html#byte
  */
 final class TypeByte extends AbstractType
 {
     /**
+     * @var int size in bytes
+     */
+    private $value;
+
+    /**
      * @param int $bytes size in bytes
      */
     public function __construct(int $bytes)
     {
-        $this->bytes = $bytes;
+        $this->setValue($bytes);
     }
 
     /**
@@ -24,6 +27,22 @@ final class TypeByte extends AbstractType
      */
     public function export(int $schemeVersion)
     {
-        return $this->bytes;
+        return $this->getValue();
+    }
+
+    /**
+     * @return int
+     */
+    public function getValue(): int
+    {
+        return $this->value;
+    }
+
+    /**
+     * @param int $value
+     */
+    public function setValue(int $value): void
+    {
+        $this->value = $value;
     }
 }

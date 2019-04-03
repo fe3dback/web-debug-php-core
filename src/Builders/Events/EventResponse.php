@@ -7,19 +7,22 @@ namespace WebDebug\Builders\Events;
 use WebDebug\Builders\Types\TypeByte;
 
 /**
- * Class EventResponse.
- *
- * @property TypeByte $memoryPeak max/peak memory usage (in bytes) during request
- *
  * @see https://web-debug.dev/docs/scheme/events.html#response
  */
 class EventResponse extends AbstractEvent
 {
+    /**
+     * max/peak memory usage (in bytes) during request.
+     *
+     * @var TypeByte
+     */
+    private $memoryPeak;
+
     public function __construct()
     {
         parent::__construct(self::EVENT_TYPE_RESPONSE);
 
-        $this->memoryPeak = new TypeByte(memory_get_peak_usage(true));
+        $this->setMemoryPeak(new TypeByte(memory_get_peak_usage(true)));
     }
 
     /**
@@ -28,7 +31,23 @@ class EventResponse extends AbstractEvent
     public function getPayload(int $schemeVersion): array
     {
         return self::build($schemeVersion, [
-            'memoryPeak' => $this->memoryPeak,
+            'memoryPeak' => $this->getMemoryPeak(),
         ]);
+    }
+
+    /**
+     * @return TypeByte
+     */
+    public function getMemoryPeak(): TypeByte
+    {
+        return $this->memoryPeak;
+    }
+
+    /**
+     * @param TypeByte $memoryPeak
+     */
+    public function setMemoryPeak(TypeByte $memoryPeak): void
+    {
+        $this->memoryPeak = $memoryPeak;
     }
 }

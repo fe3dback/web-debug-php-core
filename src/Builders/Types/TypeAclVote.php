@@ -7,16 +7,17 @@ namespace WebDebug\Builders\Types;
 use InvalidArgumentException;
 
 /**
- * Class AclVote.
- *
- * @property string $aclVote
- *
  * @see https://web-debug.dev/docs/scheme/types.html#aclvote
  */
 final class TypeAclVote extends AbstractType
 {
     public const GRANT = 'GRANT';
     public const DENIED = 'DENIED';
+
+    /**
+     * @var string
+     */
+    private $value;
 
     /**
      * AclVote constructor.
@@ -34,7 +35,7 @@ final class TypeAclVote extends AbstractType
             ]));
         }
 
-        $this->aclVote = $aclVote;
+        $this->setValue($aclVote);
     }
 
     /**
@@ -42,6 +43,22 @@ final class TypeAclVote extends AbstractType
      */
     public function export(int $schemeVersion)
     {
-        return $this->aclVote;
+        return $this->getValue();
+    }
+
+    /**
+     * @return string
+     */
+    public function getValue(): string
+    {
+        return $this->value;
+    }
+
+    /**
+     * @param string $value
+     */
+    public function setValue(string $value): void
+    {
+        $this->value = $value;
     }
 }

@@ -5,15 +5,24 @@ declare(strict_types=1);
 namespace WebDebug\Builders\Events;
 
 /**
- * Class EventLog.
- *
- * @property string     $message full log text
- * @property array|null $context additional log context
- *
  * @see https://web-debug.dev/docs/scheme/events.html#log
  */
 class EventLog extends AbstractEvent
 {
+    /**
+     * full log text.
+     *
+     * @var string
+     */
+    private $message;
+
+    /**
+     * additional log context.
+     *
+     * @var array|null
+     */
+    private $context;
+
     /**
      * EventLog constructor.
      *
@@ -23,7 +32,7 @@ class EventLog extends AbstractEvent
     {
         parent::__construct(self::EVENT_TYPE_LOG);
 
-        $this->message = $message;
+        $this->setMessage($message);
     }
 
     /**
@@ -32,8 +41,40 @@ class EventLog extends AbstractEvent
     public function getPayload(int $schemeVersion): array
     {
         return self::build($schemeVersion, [
-            'message' => $this->message,
-            'context' => $this->context ? (string) json_encode($this->context) : null,
+            'message' => $this->getMessage(),
+            'context' => null !== $this->getContext() ? (string) json_encode($this->getContext()) : null,
         ]);
+    }
+
+    /**
+     * @return string
+     */
+    public function getMessage(): string
+    {
+        return $this->message;
+    }
+
+    /**
+     * @param string $message
+     */
+    public function setMessage(string $message): void
+    {
+        $this->message = $message;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getContext(): ?array
+    {
+        return $this->context;
+    }
+
+    /**
+     * @param array|null $context
+     */
+    public function setContext(?array $context): void
+    {
+        $this->context = $context;
     }
 }

@@ -1,17 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Builders\Types;
 
 use PHPUnit\Framework\TestCase;
 use WebDebug\Builders\Types\TypeTagFlag;
 
+/**
+ * Class TypeTagFlagTest.
+ */
 class TypeTagFlagTest extends TestCase
 {
     public function test__construct()
     {
         $type = new TypeTagFlag('is_prod');
-        $this->assertSame($type->tag, 'is_prod');
-        $this->assertSame($type->tag, $type->export(1));
+        $this->assertSame($type->getValue(), 'is_prod');
+        $this->assertSame($type->getValue(), $type->export(1));
     }
 
     /**
@@ -19,6 +24,6 @@ class TypeTagFlagTest extends TestCase
      */
     public function test_notMultipart()
     {
-        $type = new TypeTagFlag('g:v');
+        new TypeTagFlag('g:v');
     }
 }

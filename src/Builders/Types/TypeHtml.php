@@ -5,12 +5,15 @@ declare(strict_types=1);
 namespace WebDebug\Builders\Types;
 
 /**
- * @property string $htmlString Valid html
- *
  * @see https://web-debug.dev/docs/scheme/types.html#html
  */
 final class TypeHtml extends AbstractType
 {
+    /**
+     * @var string Valid html
+     */
+    private $value;
+
     /**
      * HtmlType constructor.
      *
@@ -18,7 +21,7 @@ final class TypeHtml extends AbstractType
      */
     public function __construct(string $htmlString)
     {
-        $this->htmlString = $htmlString;
+        $this->setValue($htmlString);
     }
 
     /**
@@ -28,6 +31,22 @@ final class TypeHtml extends AbstractType
      */
     public function export(int $schemeVersion)
     {
-        return $this->htmlString;
+        return $this->getValue();
+    }
+
+    /**
+     * @return string
+     */
+    public function getValue(): string
+    {
+        return $this->value;
+    }
+
+    /**
+     * @param string $value
+     */
+    public function setValue(string $value): void
+    {
+        $this->value = $value;
     }
 }

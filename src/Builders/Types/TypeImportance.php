@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace WebDebug\Builders\Types;
 
 /**
- * @property int $importance Importance is int from 1 to 8, used for filtering in client
- *
  * @see https://web-debug.dev/docs/scheme/types.html#importance
  */
 final class TypeImportance extends AbstractType
@@ -21,6 +19,11 @@ final class TypeImportance extends AbstractType
     public const EMERGENCY = 8;
 
     /**
+     * @var int Importance is int from 1 to 8, used for filtering in client
+     */
+    private $value;
+
+    /**
      * @param int $importance Importance is int from 1 to 8, used for filtering in client
      */
     public function __construct(int $importance)
@@ -33,7 +36,7 @@ final class TypeImportance extends AbstractType
             $importance = 8;
         }
 
-        $this->importance = $importance;
+        $this->setValue($importance);
     }
 
     /**
@@ -41,6 +44,22 @@ final class TypeImportance extends AbstractType
      */
     public function export(int $schemeVersion)
     {
-        return $this->importance;
+        return $this->getValue();
+    }
+
+    /**
+     * @return int
+     */
+    public function getValue(): int
+    {
+        return $this->value;
+    }
+
+    /**
+     * @param int $value
+     */
+    public function setValue(int $value): void
+    {
+        $this->value = $value;
     }
 }

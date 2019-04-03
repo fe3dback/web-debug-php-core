@@ -5,14 +5,17 @@ declare(strict_types=1);
 namespace WebDebug\Builders\Events;
 
 /**
- * Class EventMiddleware.
- *
- * @property string $name Middleware name
- *
  * @see https://web-debug.dev/docs/scheme/events.html#middleware
  */
 class EventMiddleware extends AbstractEvent
 {
+    /**
+     * Middleware name.
+     *
+     * @var string
+     */
+    private $name;
+
     /**
      * EventMiddleware constructor.
      *
@@ -22,7 +25,7 @@ class EventMiddleware extends AbstractEvent
     {
         parent::__construct(self::EVENT_TYPE_MIDDLEWARE);
 
-        $this->name = $name;
+        $this->setName($name);
     }
 
     /**
@@ -31,7 +34,23 @@ class EventMiddleware extends AbstractEvent
     public function getPayload(int $schemeVersion): array
     {
         return self::build($schemeVersion, [
-            'name' => $this->name,
+            'name' => $this->getName(),
         ]);
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
     }
 }

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace WebDebug\Builders;
 
 use Ramsey\Collection\CollectionInterface;
-use Serafim\Properties\Properties;
 use WebDebug\Builders\Interfaces\IExportable;
 
 /**
@@ -13,8 +12,6 @@ use WebDebug\Builders\Interfaces\IExportable;
  */
 abstract class AbstractObject implements IExportable
 {
-    use Properties;
-
     /**
      * @param int   $schemeVersion
      * @param array $list

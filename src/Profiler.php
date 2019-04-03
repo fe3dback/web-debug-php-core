@@ -61,7 +61,7 @@ final class Profiler
      */
     public function addEvent(IEvent $event): self
     {
-        $this->scheme->events->add($event);
+        $this->scheme->getEventCollection()->add($event);
 
         return $this;
     }
@@ -71,7 +71,22 @@ final class Profiler
      */
     public function getEventCollection(): EventCollection
     {
-        return $this->scheme->events;
+        return $this->scheme->getEventCollection();
+    }
+
+    /**
+     * Build and return scheme as array
+     * In production env it should return null.
+     *
+     * @return array|null
+     */
+    public function export(): ?array
+    {
+        if ($this->isProductionMode) {
+            return null;
+        }
+
+        return $this->scheme->export(1);
     }
 
     /**
@@ -84,14 +99,16 @@ final class Profiler
      */
     public function push(): string
     {
-        if ($this->isProductionMode) {
-            return $this->uuid->uuid;
+        $data = $this->export();
+
+        if (null === $data) {
+            return $this->uuid->getValue();
         }
 
         try {
             $this->storage->set(
-                $this->getStorageKey($this->uuid->uuid),
-                json_encode($this->scheme->export($this->version))
+                $this->getStorageKey($this->uuid->getValue()),
+                json_encode($data)
             );
         } catch (CacheException $e) {
             throw new RuntimeException(
@@ -101,7 +118,7 @@ final class Profiler
             );
         }
 
-        return $this->uuid->uuid;
+        return $this->uuid->getValue();
     }
 
     /**
