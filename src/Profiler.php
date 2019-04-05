@@ -17,10 +17,6 @@ use WebDebug\Builders\Types\TypeUUID;
 
 /**
  * Class Profiler.
- *
- * @property TypeUUID $uuid
- * @property bool     $isProductionMode
- * @property int      $version
  */
 final class Profiler
 {
@@ -36,6 +32,21 @@ final class Profiler
      * @var CacheInterface
      */
     private $storage;
+
+    /**
+     * @var TypeUUID
+     */
+    private $uuid;
+
+    /**
+     * @var bool
+     */
+    private $isProductionMode;
+
+    /**
+     * @var int
+     */
+    private $version;
 
     /**
      * Profiler constructor.
@@ -102,12 +113,12 @@ final class Profiler
         $data = $this->export();
 
         if (null === $data) {
-            return $this->uuid->getValue();
+            return $this->getId();
         }
 
         try {
             $this->storage->set(
-                $this->getStorageKey($this->uuid->getValue()),
+                $this->getStorageKey($this->getId()),
                 json_encode($data)
             );
         } catch (CacheException $e) {
@@ -118,7 +129,7 @@ final class Profiler
             );
         }
 
-        return $this->uuid->getValue();
+        return $this->getId();
     }
 
     /**
@@ -154,6 +165,30 @@ final class Profiler
         }
 
         return $jsonString;
+    }
+
+    /**
+     * @return string
+     */
+    public function getId(): string
+    {
+        return $this->uuid->getValue();
+    }
+
+    /**
+     * @return int
+     */
+    public function getVersion(): int
+    {
+        return $this->version;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isProductionMode(): bool
+    {
+        return $this->isProductionMode;
     }
 
     /**
