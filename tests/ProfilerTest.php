@@ -30,7 +30,7 @@ class ProfilerTest extends TestCase
         $profiler = self::makeProfiler();
         $uuid = $profiler->push();
         $this->assertIsString($uuid);
-        $this->assertSame($profiler->uuid->getValue(), $uuid);
+        $this->assertSame($profiler->getId(), $uuid);
     }
 
     public function testPushAndPop()
@@ -78,16 +78,17 @@ class ProfilerTest extends TestCase
     {
         $profiler = self::makeProfiler();
 
-        $this->assertIsString($profiler->uuid->getValue());
+        $this->assertIsString($profiler->getId());
         $this->assertInstanceOf(EventCollection::class, $profiler->getEventCollection());
         $this->assertCount(0, $profiler->getEventCollection()->toArray());
     }
 
     public function testNothingAtProduction()
     {
-        $profiler = self::makeProfiler();
-        $profiler->isProductionMode = true;
+        $cache = new ArrayCache();
+        $profiler = new Profiler(Profiler::VERSION_1, $cache, true);
         $uuid = $profiler->push();
+
         $this->assertNull($profiler->pop($uuid));
     }
 }

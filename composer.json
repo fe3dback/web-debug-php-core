@@ -15,7 +15,7 @@
         "issues": "https://github.com/fe3dback/web-debug-php-core/issues",
         "source": "https://github.com/fe3dback/web-debug-php-core"
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
@@ -36,11 +36,11 @@
         "ramsey/collection": "^1.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^7",
+        "phpunit/phpunit": "^8",
         "phpstan/phpstan": "^0.11.2",
         "friendsofphp/php-cs-fixer": "^2.14",
         "symfony/var-dumper": "*",
-        "symfony/cache": "*"
+        "symfony/cache": "^3.4"
     },
     "suggest": {
         "symfony/cache": "Use any psr-6/16 compatible cache for persisted storage"
