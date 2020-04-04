@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Builders\Types;
 
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use WebDebug\Builders\Types\TypeTagFlag;
 
@@ -19,11 +20,10 @@ class TypeTagFlagTest extends TestCase
         $this->assertSame($type->getValue(), $type->export(1));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function test_notMultipart()
     {
+        $this->expectException(InvalidArgumentException::class);
+
         new TypeTagFlag('g:v');
     }
 }

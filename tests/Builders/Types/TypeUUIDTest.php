@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Builders\Types;
 
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
 use WebDebug\Builders\Types\TypeUUID;
@@ -44,11 +45,10 @@ class TypeUUIDTest extends TestCase
         $this->assertIsString($guid->getValue());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function test_constructException()
     {
+        $this->expectException(InvalidArgumentException::class);
+
         new TypeUUID('123');
     }
 }
